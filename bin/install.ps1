@@ -1,3 +1,4 @@
+#!powershell
 #$ROOT = Split-Path (Get-Variable MyInvocation).value.MyCommand.Path
 
 $PY3PKG = "https://www.python.org/ftp/python/3.12.4/python-3.12.4-embed-amd64.zip"
