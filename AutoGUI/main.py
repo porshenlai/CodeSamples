@@ -60,7 +60,7 @@ Wnd=None
 
 if not WTitle :
 	hotkey('win','r')
-	write(path.join(path.dirname(__file__),"C:\\Program Files (x86)\\CMoney\\CMoney.exe\n"))
+	write(path.join(path.dirname(__file__),"C:\\Windows\\Notepad.exe\n"))
 	#screenshot("sample.png")
 	for s in range(0,30) :
 		WTitle=findTitle("CMoney(")
