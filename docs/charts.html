@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
+	<title>致理課程實作範例平台</title>
+	<script>
+	let Data=[];
+	document.onload=function(){
+		document.body.querySelector("#測試").addEventListener("click",async function(evt){
+			let response = await fetch("data/2330_202501.json");
+			if (response.ok) {
+				let result = await response.json();
+				Data = result.data;
+				console.log(JSON.stringify(result,null,2));
+				let pd = Data.reduce(function(r,v){
+					r.C.push(v[0]);
+					r.V.push(parseInt(v[6].replace(/[,]/g,'')));
+					return r;
+				},{"C":[],"V":[]});
+
+				new Chart(document.getElementById('myChart.Line'), {
+					type: 'line',
+					data: {
+  						labels: pd.C,
+  						datasets: [{
+						    label: '2330-2025/01',
+						    data: pd.V,
+						    fill: false,
+						    borderColor: 'rgb(75, 192, 192)',
+						    tension: 0.1
+						}]
+					}
+				});
+
+				new Chart(document.getElementById('myChart.Bar'), {
+					type: 'bar',
+					data: {
+						labels: pd.C,
+						datasets: [{
+							label: '2330-2025/01',
+							data: pd.V,
+							borderWidth: 1
+						}]
+					},
+					options: {
+						scales: {
+							y: {
+								beginAtZero: true
+							}
+						}
+					}
+				});
+
+			} else {
+				alert("Fetch failed");
+			}
+		});
+		document.body.style.opacity=1;
+	}
+	</script>
+
+	<link rel="stylesheet" href="https://www.cyberpiers.com/piers/style.css"/>
+	<script src="http://g3c.cyberpiers.com:4780/piers/init.js"
+			PierEntrance="document.onload"
+			PierXMods="Widget,Session"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<style type="text/css">
+		@media only screen and (orientation: portrait) {
+		}
+	</style>
+</head>
+<body style="opacity:0">
+	<h1>Charts.js Test Sample</h1>
+	<div>
+		<button id="測試">測試</button>
+	</div>
+	<div><canvas id="myChart.Line"></canvas></div>
+	<div><canvas id="myChart.Bar"></canvas></div>
+</body>
+</html>
